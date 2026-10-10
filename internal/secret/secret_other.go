@@ -2,6 +2,6 @@
 
 package secret
 
-func readSecretNoEcho(prompt string) (string, error) {
-	return "", errNotSupported
+func disableEcho(fd uintptr) (func(), error) {
+	return nil, errNotSupported
 }

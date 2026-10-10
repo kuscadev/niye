@@ -294,8 +294,16 @@ func runInit(args []string, stdin io.Reader, stdout, stderr io.Writer, lang stri
 		cfg.Model = line
 	}
 
-	// API Key (hidden)
-	apiKey, err := secret.PromptSecret(msg.InitAPIKeyPrompt, reader)
+	// API Key: hidden input when stdin is a terminal. If echo cannot be
+	// disabled, PromptSecretTerminal returns an error and we never fall
+	// back to visible input.
+	var apiKey string
+	var err error
+	if f, ok := stdin.(*os.File); ok && secret.IsTerminal(stdin) {
+		apiKey, err = secret.PromptSecretTerminal(msg.InitAPIKeyPrompt, reader, f)
+	} else {
+		apiKey, err = secret.PromptSecret(msg.InitAPIKeyPrompt, reader)
+	}
 	if err != nil {
 		fmt.Fprintf(stderr, "anahtar okunamadı: %v\n", err)
 		return 1
