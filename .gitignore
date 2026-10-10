@@ -1,0 +1,51 @@
+# Built binaries (root-anchored: a bare `niye` pattern would also match
+# the cmd/niye/ source directory and hide all of its files from git)
+/niye
+/main
+
+# Local config and secrets — never commit real credentials
+config.toml
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+secrets*.toml
+secrets*.json
+secrets*.yaml
+secrets*.yml
+*credentials*.json
+*credentials*.toml
+service-account*.json
+*api_key*.txt
+*apikey*.txt
+tokens*.txt
+
+# Test and coverage artifacts
+# NOTE: *.test matches compiled test binaries only, NOT *_test.go sources
+*.test
+*.out
+coverage.out
+coverage.html
+*.coverprofile
+
+# Build output directories
+dist/
+bin/
+
+# Logs
+*.log
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
